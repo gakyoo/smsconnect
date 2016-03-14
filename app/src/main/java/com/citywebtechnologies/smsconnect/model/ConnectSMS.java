@@ -4,6 +4,7 @@ package com.citywebtechnologies.smsconnect.model;
 public class ConnectSMS {
 
 	private long id;
+	private long rec;
 	private String address;
 	private String message;
 	private long dateReceived;
@@ -16,6 +17,13 @@ public class ConnectSMS {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getRec() {
+		return this.rec;
+	}
+	public void setRec(long rec) {
+		this.rec = rec;
 	}
 
 	public String getAddress() {

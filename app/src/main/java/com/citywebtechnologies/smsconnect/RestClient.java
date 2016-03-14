@@ -9,7 +9,7 @@ import com.loopj.android.http.RequestParams;
 
 public class RestClient {
     private static String TAG = "Rest Client url";
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    public static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params,
                            AsyncHttpResponseHandler responseHandler) {

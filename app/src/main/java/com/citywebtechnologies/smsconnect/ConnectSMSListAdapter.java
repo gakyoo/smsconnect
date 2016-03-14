@@ -44,7 +44,19 @@ public class ConnectSMSListAdapter extends BaseAdapter {
 
 		tv = (TextView) convertView.findViewById(R.id.sentStatus);
 		if (sms.getSentStatus() == 1)
-			tv.setText("Sent to server");
+			tv.setText("Sent & server updated");
+		else if (sms.getSentStatus() == 2)
+			tv.setText("Sent, Waiting server update");
+		else if (sms.getSentStatus() == 3)
+			tv.setText("Failed, Retrying");
+		else if (sms.getSentStatus() == 4)
+			tv.setText("No service, Retrying");
+		else if (sms.getSentStatus() == 5)
+			tv.setText("No radio, Retrying");
+		else if (sms.getSentStatus() == 6)
+			tv.setText("Permission Denied, Retrying");
+		else if (sms.getSentStatus() == 100 || sms.getSentStatus() == 99)
+			tv.setText("Queued");
 		else
 			tv.setText("Pending");
 		tv = (TextView) convertView.findViewById(R.id.dateReceived);

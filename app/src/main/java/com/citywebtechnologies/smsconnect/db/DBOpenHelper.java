@@ -12,16 +12,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	public static final String TABLE_MESSAGES = "messages";
 
 	public static final String MSG_COLUMN_ID = "id";
+	public static final String MSG_COLUMN_REC_ID = "recId";
 	public static final String MSG_COLUMN_ADDRESS = "address";
 	public static final String MSG_COLUMN_MESSAGE = "message";
 	public static final String MSG_COLUMN_SENT_STATUS = "sent_status";
 	public static final String MSG_COLUMN_DATE_ADDED = "date_added";
 
+	//added original smsId field to database
 	private static final String TABLE_MSG_CREATE = "CREATE TABLE "
 			+ TABLE_MESSAGES + " (" + MSG_COLUMN_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + MSG_COLUMN_ADDRESS
 			+ " TEXT, " + MSG_COLUMN_MESSAGE + " TEXT, "
-			+ MSG_COLUMN_DATE_ADDED + " NUMERIC," + MSG_COLUMN_SENT_STATUS
+			+ MSG_COLUMN_DATE_ADDED + " NUMERIC," + MSG_COLUMN_REC_ID + " INTEGER," + MSG_COLUMN_SENT_STATUS
 			+ " INTEGER )";
 
 	public DBOpenHelper(Context context) {
