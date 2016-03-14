@@ -2,6 +2,7 @@ package com.citywebtechnologies.smsconnect;
 
 public class Sms {
 	private String _id;
+	private String _RecId;
 	private String _address;
 	private String _msg;
 	private String _readState; // "0" for not read sms and "1" for read sms
@@ -10,6 +11,12 @@ public class Sms {
 
 	public String getId() {
 		return _id;
+	}
+	public String getRec() {
+		return _RecId;
+	}
+	public void setRec(String rec) {
+		_RecId = rec;
 	}
 
 	public String getAddress() {

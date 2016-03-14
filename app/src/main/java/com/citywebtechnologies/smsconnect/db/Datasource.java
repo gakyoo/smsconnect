@@ -19,9 +19,10 @@ public class Datasource {
     private SQLiteDatabase database;
     private static String TAG = "Datasource";
 
+    //new column added for storing original smsId
     static final String[] messageColumnNames = {DBOpenHelper.MSG_COLUMN_ID,
             DBOpenHelper.MSG_COLUMN_ADDRESS, DBOpenHelper.MSG_COLUMN_MESSAGE,
-            DBOpenHelper.MSG_COLUMN_DATE_ADDED,
+            DBOpenHelper.MSG_COLUMN_DATE_ADDED,DBOpenHelper.MSG_COLUMN_REC_ID,
             DBOpenHelper.MSG_COLUMN_SENT_STATUS};
 
     public Datasource(Context context) {
@@ -42,12 +43,27 @@ public class Datasource {
         values.put(DBOpenHelper.MSG_COLUMN_MESSAGE, sms.getMessage());
         values.put(DBOpenHelper.MSG_COLUMN_DATE_ADDED, sms.getDateSent());
         values.put(DBOpenHelper.MSG_COLUMN_SENT_STATUS, sms.getSentStatus());
-
+        //store original smsId
+        values.put(DBOpenHelper.MSG_COLUMN_REC_ID,sms.getRec());
         long insertid = database.insert(DBOpenHelper.TABLE_MESSAGES, null,
                 values);
         Log.i(TAG, "Created a message with id " + insertid);
         sms.setId(insertid);
         return sms;
+    }
+    //check whether sms exists using original smsId
+    public Boolean MessageExists(ConnectSMS sms) {
+        String Query = "Select * from " + DBOpenHelper.TABLE_MESSAGES + " where " + DBOpenHelper.MSG_COLUMN_REC_ID + " = " + sms.getRec();
+        Log.i(TAG, "Checking existence " + Query.toString());
+        Cursor cursor = database.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            //sms doesnt exists
+            return false;
+        }
+        cursor.close();
+        //sms exists
+        return true;
     }
 
     public List<ConnectSMS> findFilterdMessages(String selection, String orderBy) {
@@ -72,8 +88,12 @@ public class Datasource {
                         .getColumnIndex(DBOpenHelper.MSG_COLUMN_MESSAGE)));
                 sms.setDateSent(cursor.getLong(cursor
                         .getColumnIndex(DBOpenHelper.MSG_COLUMN_DATE_ADDED)));
+                //read original smsId
+                sms.setRec(cursor.getInt(cursor
+                        .getColumnIndex(DBOpenHelper.MSG_COLUMN_REC_ID)));
                 sms.setSendStatus(cursor.getInt(cursor
                         .getColumnIndex(DBOpenHelper.MSG_COLUMN_SENT_STATUS)));
+
                 mList.add(sms);
             }
         }
